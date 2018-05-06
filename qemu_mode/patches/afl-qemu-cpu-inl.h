@@ -68,7 +68,6 @@ int start = 0;
       printf("before afl setup\n"); \
       start=1; \
       startTrace(0x400000, 0x500000); \
-      startForkserver(NULL, 0); \
       afl_setup(); \
       afl_forkserver(cpu); \
     } \
@@ -76,6 +75,8 @@ int start = 0;
 	printf("exit\n"); \
 	exit(0); \
     } \
+    if(start == 1) \
+        printf("pc is %x\n", itb->pc);\
     afl_maybe_log(itb->pc); \
   } while (0)
 
